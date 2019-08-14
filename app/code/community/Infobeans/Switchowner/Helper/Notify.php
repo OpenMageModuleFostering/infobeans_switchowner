@@ -56,7 +56,6 @@ class Infobeans_Switchowner_Helper_Notify extends Mage_Core_Helper_Abstract
             /** @var Mage_Core_Model_Email_Template $mailTemplate */
             $mailTemplate = Mage::getModel('core/email_template');
             try {
-
                 $mailTemplate
                     ->setDesignConfig(array('area' => 'frontend', 'store' => $storeId))
                     ->sendTransactional(
@@ -67,9 +66,7 @@ class Infobeans_Switchowner_Helper_Notify extends Mage_Core_Helper_Abstract
                         $vars,
                         $storeId
                     );
-
             } catch (Exception $e) {
-
                 Mage::logException($e);
             }
         }

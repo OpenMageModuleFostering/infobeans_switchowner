@@ -34,19 +34,23 @@ class Infobeans_Switchowner_Model_Observer
                 $state = explode(",", Mage::getStoreConfig('switchowner/general/orderstate'));
                 $orderState = $order->getStatus();
                 
-                if (!in_array($orderState , $state)) {
+                if (!in_array($orderState, $state)) {
                     if ($order->isGuestOrder() && $this->_helper()->isAllowed()) {
-                        $block->addButton('switchOrder', array(
+                        $block->addButton(
+                            'switchOrder', array(
                             'label' => $this->_helper()->__("Switch Order Owner"),
                             'onclick' => "javascript: switchownerRowClick()",
                             'class' => 'switch-order',
-                        ));
+                            )
+                        );
                     } else {
-                        $block->addButton('switchOrder', array(
+                        $block->addButton(
+                            'switchOrder', array(
                             'label' => $this->_helper()->__("Switch Order Owner"),
                             'onclick' => "javascript: switchownerRowClick()",
                             'class' => 'switch-order',
-                        ));
+                            )
+                        );
                     }
                 }
             }
@@ -71,12 +75,14 @@ class Infobeans_Switchowner_Model_Observer
                 'sales_order',
             );
 
-            if ( in_array($block->getRequest()->getControllerName(), $allowedControllerNames) ) {
+            if (in_array($block->getRequest()->getControllerName(), $allowedControllerNames)) {
                 $backendUrl = Mage::getSingleton('adminhtml/url');
-                $block->addItem('switch', array(
+                $block->addItem(
+                    'switch', array(
                     'label' => $this->_helper()->__("Switch Order Owner"),
                     'url' =>  "javascript:switchownerRowClick();",
-                ));
+                    )
+                );
             }
         }
     }

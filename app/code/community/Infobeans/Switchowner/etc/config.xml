@@ -6,6 +6,9 @@
  * @category   Infobeans
  * @package    Infobeans_Switchowner
  * @version    1.0.1
+ * 
+ * Update release with version 1.0.2
+ *
  * @author     InfoBeans Technologies Limited http://www.infobeans.com/
  * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
  */
@@ -13,7 +16,7 @@
 <config>
     <modules>
         <Infobeans_Switchowner>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </Infobeans_Switchowner>
     </modules>
     <admin>

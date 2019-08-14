@@ -70,7 +70,7 @@ class Infobeans_Switchowner_Block_Adminhtml_Customer_Info extends Mage_Adminhtml
             $customerBillingAddressId =  $customerData->getDefaultBilling();
             //getting default shipping address
             $customerShippingAddressId = $customerData->getDefaultShipping();
-            if (($customerBillingAddressId == "" || $customerShippingAddressId == "") && $overwriteAddress == 1 ) {
+            if (($customerBillingAddressId == "" || $customerShippingAddressId == "") && $overwriteAddress == 1) {
                 $users->removeItemByKey($key);
             }
         }
@@ -114,11 +114,13 @@ class Infobeans_Switchowner_Block_Adminhtml_Customer_Info extends Mage_Adminhtml
                 if ($group->getWebsiteId() != $website->getId()) {
                     continue;
                 }
+
                 $groupShow = false;
                 foreach ($storeModel->getStoreCollection() as $store) {
                     if ($store->getGroupId() != $group->getId()) {
                         continue;
                     }
+
                     if (!$websiteShow) {
                         $websiteShow = true;
                         $options['website_' . $website->getCode()] = array(
@@ -127,6 +129,7 @@ class Infobeans_Switchowner_Block_Adminhtml_Customer_Info extends Mage_Adminhtml
                             'style'    => 'padding-left:6px; background:#DDD; font-weight:bold;',
                         );
                     }
+
                     if (!$groupShow) {
                         $groupShow = true;
                         $options['group_' . $group->getId() . '_open'] = array(
@@ -137,12 +140,14 @@ class Infobeans_Switchowner_Block_Adminhtml_Customer_Info extends Mage_Adminhtml
                             'style'     => 'padding-left:32px;'
                         );
                     }
+
                     $options['store_' . $store->getCode()] = array(
                         'label'    => $store->getName(),
                         'id'    => 'store_'.$store->getId(),
                         'style'    => '',
                     );
                 }
+
                 if ($groupShow) {
                     $options['group_' . $group->getId() . '_close'] = array(
                         'is_group'  => true,
@@ -151,6 +156,7 @@ class Infobeans_Switchowner_Block_Adminhtml_Customer_Info extends Mage_Adminhtml
                 }
             }
         }
+
         return $options;
     }
 }

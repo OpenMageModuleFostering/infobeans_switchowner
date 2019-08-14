@@ -9,7 +9,7 @@
  * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
  */
 
-class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_Adminhtml_Controller_Action 
+class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_Adminhtml_Controller_Action
 {
 
     /**
@@ -62,7 +62,6 @@ class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_A
         $overwriteAddress = Mage::getStoreConfig('switchowner/address/override_billing_shipping');
 
         foreach ($users as $key => $value) {
-
             $customerData = Mage::getModel('customer/customer')->load($value->getId());
 
             //getting default billing address
@@ -80,9 +79,11 @@ class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_A
         foreach ($users as $user) {
             $customerOptions = $customerOptions . '<option value="' . $user->getId() . '">' . $user->getEmail() .' ( '.$user->getFirstname().' '.$user->getMiddlename().' '.$user->getLastname().' )</option>';
         }
+
         $customerOptions = $customerOptions . "</select>";
 
-        echo $customerOptions;
+        $this->getResponse()->clearHeaders()->setHeader('Content-type', 'application/json', true);
+        $this->getResponse()->setBody(json_encode($customerOptions));
     }
 
     public function switchOwnerAction() 
@@ -113,13 +114,14 @@ class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_A
                     if($acountSharingOption == 1 && $newCustomerWebsiteId != $oldCustomerWebsiteId) {
                         $canOwnerSwitch = 0;
                     }
-                    if (!in_array($orderState , $state) && $canOwnerSwitch == 1) {
+
+                    if (!in_array($orderState, $state) && $canOwnerSwitch == 1) {
                         $order->switchOwner($customerId, $overwriteName, $sendEmail, $overwriteAddress);
                         $success++;
                     } else if ($canOwnerSwitch == 0) {
                         $websiteError++;
                         $websiteErrorMsg = $websiteErrorMsg.$order->getIncrementId().", ";
-                    } else if (in_array($orderState , $state)) {
+                    } else if (in_array($orderState, $state)) {
                         $orderStatusError++;
                         $orderStatusErrorMsg = $orderStatusErrorMsg.$order->getIncrementId().", ";
                     } else {
@@ -134,29 +136,35 @@ class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_A
                 if ($success) {
                     $this->_getSession()->addSuccess($this->_helper()->__("%s Order owner were successfully switched.", $success));
                 }
+
                 if($websiteError) {
                     $this->_getSession()->addError($this->_helper()->__("Order owner can not be switched for %s as the selected customer belongs to the different website.", rtrim($websiteErrorMsg, ", ")));
                 }
+
                 if($orderStatusError) {
-                    $this->_getSession()->addError($this->_helper()->__("Order owner can not be switched for %s as it can not be processed further." ,rtrim($orderStatusErrorMsg, ", ")));
+                    $this->_getSession()->addError($this->_helper()->__("Order owner can not be switched for %s as it can not be processed further.", rtrim($orderStatusErrorMsg, ", ")));
                 }
+
                 if ($error) {
                     $this->_getSession()->addError($this->_helper()->__("%s Order were not be updated due to some error.", $error));
                 }
 
                 $this->_redirect('adminhtml/sales_order/index');
             } else {
-                $referer = Mage::helper( 'core/http' )->getHttpReferer();
+                $referer = Mage::helper('core/http')->getHttpReferer();
                         
                 if ($success) {
                     $this->_getSession()->addSuccess($this->_helper()->__("Order owner was successfully switched."));
                 }
+
                 if($websiteError) {
-                    $this->_getSession()->addError($this->_helper()->__("Order %s owner can not be switched as the selected customer belongs to the different website.",rtrim($websiteErrorMsg, ", ")));
+                    $this->_getSession()->addError($this->_helper()->__("Order %s owner can not be switched as the selected customer belongs to the different website.", rtrim($websiteErrorMsg, ", ")));
                 }
+
                 if($orderStatusError) {
-                    $this->_getSession()->addError($this->_helper()->__("Order %s owner can not be switched as it can not be processed further." ,rtrim($orderStatusErrorMsg, ", ")));
+                    $this->_getSession()->addError($this->_helper()->__("Order %s owner can not be switched as it can not be processed further.", rtrim($orderStatusErrorMsg, ", ")));
                 }
+
                 if ($error) {
                     $this->_getSession()->addError($this->_helper()->__("Order was not be updated due to some error."));
                 }
@@ -172,6 +180,7 @@ class Infobeans_Switchowner_Adminhtml_Switchowner_OrderController extends Mage_A
                 $this->_redirect('adminhtml/sales_order/index');
             }
         }
+
         return;
     }
 }

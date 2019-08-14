@@ -37,6 +37,7 @@ class Infobeans_Switchowner_Model_Mysql4_History_Collection extends Mage_Core_Mo
         if (!$this->isLoaded()) {
             $this->load();
         }
+
         return $this->_last;
     }
 }

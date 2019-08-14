@@ -24,14 +24,13 @@ class Infobeans_Switchowner_Model_History extends Mage_Core_Model_Abstract
     {
         if (!$this->_order) {
             if ($orderId = $this->getOrderId()) {
-
                 $order = Mage::getModel('switchowner/order')->load($orderId);
                 $this->_order = $order;
-
             } else {
                 return false;
             }
         }
+
         return $this->_order;
     }
 
@@ -67,6 +66,7 @@ class Infobeans_Switchowner_Model_History extends Mage_Core_Model_Abstract
             $collection->addFieldToFilter('history_id', $this->getId());
             $this->_details = $collection;
         }
+
         return $this->_details;
     }
 
@@ -105,10 +105,12 @@ class Infobeans_Switchowner_Model_History extends Mage_Core_Model_Abstract
                 break;
             }
         }
+
         if ($customerId) {
             $customer = Mage::getModel('customer/customer')->load($customerId);
             return $customer;
         }
+
         return new Varien_Object();
     }
     
@@ -126,10 +128,12 @@ class Infobeans_Switchowner_Model_History extends Mage_Core_Model_Abstract
                 break;
             }
         }
+
         if ($adminId) {
             $adminData = Mage::getModel('admin/user')->load($adminId);
             return $adminData;
         }
+
         return new Varien_Object();
     }
 

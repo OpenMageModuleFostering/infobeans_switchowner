@@ -52,7 +52,6 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
         /** @var Infobeans_Switchowner_Model_History $lastItem */
         $lastItem = $this->getOwnerSwitchHistory()->getLastItem();
         if ($lastItem && $lastItem->hasDetails()){
-
             $from = $lastItem->getFromData();
 
             foreach ($this->getNameParts() as $key){
@@ -64,6 +63,7 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
 
             return implode(" ", $nameParts);
         }
+
         return false;
     }
 
@@ -104,7 +104,6 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
             ->setCustomerGroupId($newCustomerGroup);
 
         if ($overwriteName == 1) {
-
             $nameParts = $this->getNameParts();
             foreach ($nameParts as $nameKey) {
                 $dataKey = 'customer_' . $nameKey;
@@ -119,7 +118,6 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
 
         // Overwrite billing/shipping address of customer
         if ($overwriteAddress == 1) {
-
             //getting default billing address
             $customerBillingAddressId = $customer->getDefaultBilling();
             $defaultBillingAddress = Mage::getModel('customer/address')->load($customerBillingAddressId)->getData();
@@ -182,11 +180,10 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
                     $shippingAddress->addData($shippingData);        
                     $shippingAddress->implodeStreetAddress()->save();
                 }
-                
             } catch (Exception $e) {
-                Mage::log($e,null,"IBswitchowner.log");
+                Mage::log($e, null, "IBswitchowner.log");
                 Mage::getSingleton('core/session')->addError($e->getMessage());
-                exit;
+                return;
             }
         }
         
@@ -230,6 +227,7 @@ class Infobeans_Switchowner_Model_Order extends Mage_Sales_Model_Order
 
             $this->_ownerswitchHistoryCollection = $collection;
         }
+
         return $this->_ownerswitchHistoryCollection;
     }
 

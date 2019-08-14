@@ -12,7 +12,8 @@
 $installer = $this;
 
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
 
 DROP TABLE IF EXISTS {$this->getTable('ib_switchowner_history_details')};
 DROP TABLE IF EXISTS {$this->getTable('ib_switchowner_history')};
@@ -37,6 +38,7 @@ CREATE TABLE IF NOT EXISTS {$this->getTable('ib_switchowner_history_details')} (
   CONSTRAINT `FK_IB_AORDER_DETAIL_HISTORY` FOREIGN KEY (`history_id`) REFERENCES `{$this->getTable('ib_switchowner_history')}` (`history_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-    ");
+    "
+);
 
 $installer->endSetup(); 
