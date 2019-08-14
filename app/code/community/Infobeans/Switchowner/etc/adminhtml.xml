@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <switchowner>
+                                        <title>Infobeans - Switch Order Owner</title>
+                                    </switchowner>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <sales translate="title" module="sales">
+                        <children>
+                            <order translate="title">
+                                <children>
+                                    <actions translate="title">
+                                        <children>
+                                            <switchowner translate="title">
+                                                <title>Switch Order Owner</title>
+                                            </switchowner>
+                                        </children>
+                                    </actions>
+                                </children>
+                            </order>
+                        </children>
+                    </sales>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

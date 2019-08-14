@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addJs" ifconfig="switchowner/jquery/enabled">
+                <script>infobeans/switchowner/jquery.min.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/jquery.validate.min.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/jquery.noconflict.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/chosen/chosen.jquery.js</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/default.css</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/ibmagento.css</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/chosen/chosen.css</script>
+            </action>
+        </reference>
+        <reference name="sales_order_tabs">
+            <block type="switchowner/adminhtml_sales_order_view_tabs_history" name="switchowner_history"/>
+            <action method="addTab">
+                <name>Switch Owner History</name>
+                <block>switchowner_history</block>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="switchowner/adminhtml_customer_info" as="switchowner_customer_info" name="switchowner.customer.info" />
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_index>
+        <reference name="head">
+            <action method="addJs" ifconfig="switchowner/jquery/enabled">
+                <script>infobeans/switchowner/jquery.min.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/jquery.validate.min.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/jquery.noconflict.js</script>
+            </action>
+            <action method="addJs">
+                <script>infobeans/switchowner/chosen/chosen.jquery.js</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/default.css</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/ibmagento.css</script>
+            </action>
+            <action method="addCss">
+                <script>infobeans/switchowner/css/chosen/chosen.css</script>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="switchowner/adminhtml_customer_info" after="-" as="switchowner_customer_info" name="switchowner.customer.info" />
+        </reference>
+    </adminhtml_sales_order_index>
+</layout>

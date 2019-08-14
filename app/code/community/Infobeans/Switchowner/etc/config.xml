@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+-->
+<config>
+    <modules>
+        <Infobeans_Switchowner>
+            <version>1.0.1</version>
+        </Infobeans_Switchowner>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <switchowner before="Mage_Adminhtml">Infobeans_Switchowner_Adminhtml</switchowner>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <events>
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <ib_switchowner_generate_blocks_after>
+                        <type>singleton</type>
+                        <class>switchowner/observer</class>
+                        <method>generateBlockAfter</method>
+                    </ib_switchowner_generate_blocks_after>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
+
+            <core_block_abstract_prepare_layout_after>
+                <observers>
+                    <ib_switchowner_mass_action_option>
+                        <class>switchowner/observer</class>
+                        <method>massActionOption</method>
+                    </ib_switchowner_mass_action_option>
+                </observers>
+            </core_block_abstract_prepare_layout_after>
+        </events>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <switchowner>
+                                            <title>Infobeans - Switch Order Owner</title>
+                                        </switchowner>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                        <sales translate="title" module="sales">
+                            <children>
+                                <order translate="title">
+                                    <children>
+                                        <actions translate="title">
+                                            <children>
+                                                <switchowner translate="title">
+                                                    <title>Switch Order Owner</title>
+                                                </switchowner>
+                                            </children>
+                                        </actions>
+                                    </children>
+                                </order>
+                            </children>
+                        </sales>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <layout>
+            <updates>
+                <switchowner>
+                    <file>infobeans/switchowner.xml</file>
+                </switchowner>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Infobeans_Switchowner>
+                    <files>
+                        <default>Infobeans_Switchowner.csv</default>
+                    </files>
+                </Infobeans_Switchowner>
+            </modules>
+        </translate>
+    </adminhtml>
+    <global>
+        <template>
+            <email>
+                <switchowner_notification_template translate="label" module="switchowner">
+                    <label>Switch Order Owner - Customer Notification</label>
+                    <file>infobeans_switchowner/notify_customer.html</file>
+                    <type>html</type>
+                </switchowner_notification_template>
+            </email>
+        </template>
+        <models>
+            <switchowner>
+                <class>Infobeans_Switchowner_Model</class>
+                <resourceModel>switchowner_mysql4</resourceModel>
+            </switchowner>
+            <switchowner_mysql4>
+                <class>Infobeans_Switchowner_Model_Mysql4</class>
+                <entities>
+                    <history>
+                        <table>ib_switchowner_history</table>
+                    </history>
+                    <detail>
+                        <table>ib_switchowner_history_details</table>
+                    </detail>
+                </entities>
+            </switchowner_mysql4>
+        </models>
+        <resources>
+            <switchowner_setup>
+                <setup>
+                    <module>Infobeans_Switchowner</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </switchowner_setup>
+            <switchowner_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </switchowner_write>
+            <switchowner_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </switchowner_read>
+        </resources>
+        <blocks>
+            <switchowner>
+                <class>Infobeans_Switchowner_Block</class>
+            </switchowner>
+        </blocks>
+        <helpers>
+            <switchowner>
+                <class>Infobeans_Switchowner_Helper</class>
+            </switchowner>
+        </helpers>
+    </global>
+    <default>
+        <switchowner>
+            <general>
+                <orderstate>canceled,closed,fraud,payment_review,paypal_canceled_reversal,paypal_reversed,pending_payment,pending_paypal</orderstate>
+            </general>
+            <address>
+                <override_billing_shipping>1</override_billing_shipping>
+                <override_name>1</override_name>
+            </address>
+            <notification>
+                <enabled>1</enabled>
+                <identity>sales</identity>
+                <template>switchowner_notification_template</template>
+            </notification>
+            <jquery>
+                <enabled>1</enabled>
+            </jquery>
+        </switchowner>
+    </default>
+</config>

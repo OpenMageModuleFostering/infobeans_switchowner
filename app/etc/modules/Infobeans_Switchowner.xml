@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY(1.5x to 1.9x)
+ * InfoBeans does not guarantee correct work of this extension
+ * on any other Magento edition except mentioned one.
+ * InfoBeans does not provide extension support in case of
+ * incorrect edition usage or customized magento website.
+ * =================================================================
+ * 
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+-->
+<config>
+    <modules>
+        <Infobeans_Switchowner>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Infobeans_Switchowner>
+    </modules>
+</config>

@@ -1,0 +1,74 @@
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+
+
+.dialog { border:1px solid #555; }
+.dialog .bot { display:none !important; }
+.overlay_magento { background-color:#000; filter:alpha(opacity=60); -moz-opacity:.6; opacity:.6; -webkit-opacity:.6; }
+.top.table_window { border-bottom:1px solid #e6e6e6; background:#6a838b url(ibmagento/top_bg.gif) 0 100% repeat-x; }
+
+.magento_nw { width:6px; height:28px; }
+.magento_n { height:28px; }
+.magento_ne { width:6px; height:28px; }
+
+.magento_w { width:6px; }
+.magento_e { width:6px; }
+.magento_w,
+.magento_e,
+.magento_content { background: #fafafa url(ibmagento/content_bg.gif) 0 0 repeat-x; }
+
+.magento_sw { background:#deebf0; width:5px; height:3px; }
+.magento_s { background:#deebf0; height:3px; }
+.magento_se,
+
+.magento_sizer { background:#deebf0; width:5px; height:3px; }
+.magento_sizer { cursor:se-resize; }
+
+.magento_close { width:16px; height:16px; background:url(ibmagento/window_close.png) no-repeat 0 0; position:absolute; top:5px; right:7px; cursor:pointer; z-index:1000; }
+.magento_minimize { width:16px; height:16px; background:url(ibmagento/window_minimize.png) 0 0 no-repeat; position:absolute; top:5px; right:28px; cursor:pointer; z-index:1000; }
+.magento_maximize { width:16px; height:16px; background:url(ibmagento/window_maximize.png)0 0 no-repeat; position:absolute; top:5px; right:49px; cursor:pointer; z-index:1000; }
+
+.magento_title { float:left; width:100%; font:bold 12px/28px Arial, Helvetica, sans-serif; color:#fff; text-align:left; }
+
+.magento_content { overflow:auto; font-size:12px; }
+.magento_content,
+.magento_content label { color:#333; font-family:Arial, sans-serif; }
+
+.magento_buttons { padding:10px; text-align:right; }
+.magento_buttons input.button { border-width:1px; border-style:solid; border-color:#ed6502 #a04300 #a04300 #ed6502;  background:#ffac47 url(ibmagento/btn_bg.gif) 0 100% repeat-x; padding:0 7px 1px 7px; font:bold 12px/18px Arial, Helvetica, sans-serif; color:#fff; cursor:pointer; text-align:center; white-space:nowrap; }
+
+/* FOR IE */
+* html .magento_close { background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../themes/magento/window_maximize.png", sizingMethod="crop"); }
+* html .magento_minimize { background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../themes/magento/window_close.png", sizingMethod="crop");}
+* html .magento_maximize { background-image:none; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../themes/magento/window_minimize.png", sizingMethod="crop"); }
+
+
+.switchowner-dialog { height: 150px; padding: 10px; }
+.switchowner-message { height: 95px; }
+.switchowner-checkboxes { margin-top: 2px; }
+.switchowner-checkboxes .line { margin-bottom: 3px; }
+.switchowner-checkboxes input.checkbox { margin-right: 5px; }
+.fixed { clear: both; }
+body.adminhtml-sales-order-view #overlay_modal, body.switchowner-order-customerselect #overlay_modal {z-index: 101 !important;}
+#ib_switchowner_dialog {z-index: 102 !important;}
+button.scalable.switch-order span {background: url("../images/user.png") no-repeat scroll 0 1px transparent;padding-left: 16px;}
+.customer-select, .store-select {background: none !important;padding-top: 5px !important;}
+#customer-list, #store-list {background-color: #FCFAC9;border: 1px solid #D7C699 !important;}
+div#customer_list_chosen, div#store_list_chosen {width: 285px !important;}
+#ib_switchowner_dialog_content {height: 220px !important;}
+
+.order_owner_history_tab li:nth-child(even) {background-color: #f6f6f6 !important;}
+#order_owner_history_tab tr:nth-child(even) {background-color: #f6f6f6 !important;}
+.grid #order_owner_history_tab tr.headings th{padding-bottom: 2px;padding-top: 3px;}
+.grid #order_owner_history_tab tr.headings th span{padding: 3px 12px 4px 0;line-height: 1;}
+.order_owner_history_tab li {margin-bottom: 0px !important;margin-top: 0px !important;padding-bottom: 5px !important;padding-top: 5px !important;}
+.note-list li {background: url(ibmagento/icon_note_list.gif) no-repeat 0 8px !important; }
+.customer-select #customer-list-error{color: #D40707 !important;font-weight: bold !important;position: absolute;top: 104px;left: 19px;padding-left: 12px;background: url(../images/validation_advice_bg.gif) no-repeat 0px 1px;}
+.chosen-container .chosen-results li.highlighted {background-color: #3875d7 !important;}

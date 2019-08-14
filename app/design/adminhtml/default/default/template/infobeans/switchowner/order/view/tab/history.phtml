@@ -1,0 +1,67 @@
+<?php
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+?>
+<div class="entry-edit">
+    <div class="grid">
+        <div class="hor-scroll">
+            <table  cellspacing="0" class="data" id="order_owner_history_tab">
+                <thead>
+                    <tr class="headings">
+                        <th><span><?php echo $this->__('Order Owner Switched To'); ?></span></th>
+                        <th><span><?php echo $this->__('Owner Switched By'); ?></span></th>
+                        <th><span><?php echo $this->__('Customer Notified'); ?></span></th>
+                        <th><span><?php echo $this->__('Time'); ?></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($this->getHistory() as $item): ?>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <?php 
+                                        $name = $item->getCustomer()->getName(); 
+                                        $url = $item->getCustomerUrl(); 
+                                        $email = $item->getCustomer()->getEmail();
+                                    ?>
+                                    <a href="<?php echo $url ?>" target="_blank"><?php echo $name ?></a><span><?php echo " (".$email.")" ?></span>
+                                </strong>
+                            </td>
+                            <td>
+                                <?php 
+                                    $adminUserName = $item->getAdmin()->getUsername();
+                                    $adminUserUrl = $item->getAdminUrl();
+                                    $adminUserEmail = $item->getAdmin()->getEmail();
+                                ?>
+                                <?php if ($adminUserName != "") { ?>
+                                    <strong>
+                                        <a href="<?php echo $adminUserUrl ?>" target="_blank"><?php echo $adminUserName ?></a><span><?php echo " (".$adminUserEmail.")" ?></span>
+                                    </strong>
+                                <?php } ?>
+                            </td>
+                            <td
+                                <strong class="subdue">
+                                    <?php if ($item->getIsNotified()): ?>
+                                        <img width="16" height="16" alt="" src="<?php echo $this->getSkinUrl('infobeans/switchowner/images/notified_success.gif'); ?>">
+                                    <?php else : ?>
+                                        <img width="16" height="16" alt="" src="<?php echo $this->getSkinUrl('infobeans/switchowner/images/notified_not.png'); ?>">
+                                    <?php endif; ?>
+                                </strong>
+                            </td>
+                            <td>
+                                <span><?php echo $item->getAssignTime(); ?></span>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

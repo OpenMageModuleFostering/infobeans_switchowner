@@ -1,0 +1,159 @@
+<?php
+/**
+ * InfoBeans SwitchOwner Extension
+ *
+ * @category   Infobeans
+ * @package    Infobeans_Switchowner
+ * @version    1.0.1
+ * @author     InfoBeans Technologies Limited http://www.infobeans.com/
+ * @copyright  Copyright (c) 2016 InfoBeans Technologies Limited
+ */
+?>
+<?php
+$customerOptions = '<option value="">Select Customer</option>';
+$storeOptions = '<option value="">Select Store</option>';
+
+foreach ($this->getCustomersData() as $key => $value) {
+    $customerOptions = $customerOptions . '<option value="' . $key . '">' . $value . '</option>';
+}
+?>
+
+<?php foreach ($this->getWebsitesData() as $_value => $_option): ?>
+    <?php if (isset($_option['is_group'])): ?>
+        <?php if ($_option['is_close']): ?>
+            <?php $storeOptions = $storeOptions.'</optgroup>'; ?>
+        <?php else: ?>
+            <?php  $storeOptions = $storeOptions.'<optgroup label="'.$_option['label'].'" style="'.$_option['style'].'">'; ?>
+        <?php endif; ?>
+        <?php continue ?>
+    <?php endif; ?>
+    <?php $storeOptions = $storeOptions.'<option value="'.$_option['id'].'" style="'.$_option['style'].'">'.$_option['label'].'</option>' ; ?>
+<?php endforeach ?>
+
+<input type="hidden" class="hidden"  id="orders-select" value="">
+<script type="text/javascript">
+
+    if (typeof String.prototype.trim !== 'function') {
+        String.prototype.trim = function() {
+            return this.replace(/^\s+|\s+$/g, '');
+        }
+    }
+
+    var templatePattern =
+            '<div class="switchowner-dialog">' +
+            '<div class="switchowner-checkboxes" >' +
+            '<form id="switchowner-form" action="<?php echo $this->getSwitchOwnerUrl(); ?>" method="POST">' +
+            
+            '<div class="switchowner-message">' +
+            '<div class="stores store-select"><select onchange="reloadCustomerId()"  name="store-list" id="store-list" class="chosen-select" style="widht:200px !important;" tabindex="2"><?php echo $storeOptions; ?></select></div>' +
+            '<div class="customer customer-select"><select onchange="setCustomerId()" name="customer-list" id="customer-list" required class="chosen-select" style="widht:200px !important;" tabindex="2"><?php echo $customerOptions; ?></select></div>' +
+            '<div class="arrow">&nbsp;</div>' +
+            '<div class="fixed"></div>' +
+            '</div>' +
+            
+            '<input type="hidden" class="hidden" name="order_ids" id="order_ids"  value="<?php echo $this->getOrderIds(); ?>">' +
+            '<input type="hidden" class="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>">' +
+            '<input type="hidden" class="hidden" name="customer_id" id="customer_id" value="{{customer_id}}">' +
+           
+            '<div class="line">' +
+            '<input type="checkbox" class="checkbox" name="send_email" id="send_email_checkbox"<?php if (!$this->_helper()->configNotificationEnabled()): ?>disabled<?php endif; ?>>' +
+            '<label for="send_email_checkbox"><?php echo $this->__("Notify New Owner & Send Copy To Admin"); ?></label>' +
+            '</div>' +
+            
+            '</form>' +
+            '</div>' +
+            '</div>';
+
+    var templateMessage = new Template(templatePattern, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', ""));
+
+    function setCustomerId() {
+        var x = document.getElementById("customer-list").value;
+        document.getElementById("customer_id").value = x;
+
+        var selectedOrders = document.getElementById("orders-select").value;
+        if (selectedOrders != "") {
+            document.getElementById("order_ids").value = selectedOrders;
+        }
+    }
+
+    function reloadCustomerId() {
+        var st = document.getElementById("store-list").value;
+        var res = st.split("_");
+        if (res[0] == 'website') {
+            paramsStr = "websiteid=" + res[1];
+        } else if(res[0] == 'store') {
+            paramsStr = "storeid=" + res[1];
+        } else {
+            paramsStr = "storeid=" + st;
+        }
+        
+        var reloadurl = "<?php echo Mage::helper('adminhtml')->getUrl("adminhtml/switchowner_order/getCustomerData") ?>";
+        new Ajax.Request(reloadurl, {
+            method: 'post',
+            parameters: paramsStr,
+            onComplete: function(transport) {
+                jQuery('.customer-select').html(transport.responseText);
+                jQuery('.chosen-select').chosen();
+            }
+        });
+    }
+
+    var switchownerRowClick = function () {
+        
+        var vals = jQuery('input[type="checkbox"]:checked').map(function() {
+            return this.value;
+        }).get().join(',');
+        jQuery('#orders-select').val(vals);
+        
+        var tds = $$('#switchownerGrid tr.on-mouse td');
+        var customerId = "";
+        var customerName = "";
+        var customerEmail = "";
+        var selectedOrders = document.getElementById("orders-select").value;
+        if (selectedOrders) {
+            orderIds = selectedOrders;
+        } else {
+            orderIds = "";
+        }
+
+        var data = {
+            'order_id': selectedOrders,
+            'customer_name': customerName.trim(),
+            'customer_email': customerEmail.trim(),
+            'customer_id': customerId.trim(),
+            'send_email': <?php echo $this->_helper()->configNotificationEnabled() ? 'true' : 'false'; ?>,
+        };
+        var message = templateMessage.evaluate(data);
+        Dialog.confirm(message, {
+        className: "magento",
+            id: "ib_switchowner_dialog",
+            width: 390,
+            height: 165,
+            title: '<?php echo $this->__("Swicth Owner Confirmation"); ?>',
+            destroyOnClose: true,
+            closable: true,
+            draggable: true,
+            okLabel: '<?php echo $this->__("Switch Owner"); ?>',
+            cancelLabel: '<?php echo $this->__("Cancel"); ?>',
+            onShow: (function (event) {
+            $('send_email_checkbox').checked = data.send_email;
+
+            }).bind(data),
+            onOk: function (event) {
+                
+                jQuery.validator.setDefaults({ ignore: ":hidden:not(select)" });
+                jQuery('#switchowner-form').validate();
+                if(jQuery('#switchowner-form').valid() == false && jQuery('#customer-list').valid() == false){
+                    return;
+                }
+                
+                $$('#ib_switchowner_dialog_content button.ok_button, #ib_switchowner_dialog_content input.ok_button').each(function(el){
+                    el.disabled = true;
+                    el.addClassName('disabled');
+                });
+                $('switchowner-form').submit();
+            }
+        });
+        jQuery('.chosen-select').chosen();
+    };
+</script>
