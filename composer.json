@@ -1,16 +1,19 @@
 {
-    "name": "OpenMageModuleFostering/Infobeans_Switchowner",
+    "name": "OpenMageModuleFostering\/Infobeans_Switchowner",
     "type": "magento-module",
     "license": "OSL",
     "homepage": "",
     "description": "Infobeans Switch Order Owner Release 1.0.2",
     "authors": [
-    {
-        "name": "InfoBeans",
-        "email": "magentosupport@infobeans.com"
-    }
-],
+        {
+            "name": "InfoBeans",
+            "email": "magentosupport@infobeans.com"
+        }
+    ],
     "suggest": {
-        "magento-hackathon/magento-composer-installer": "*"
-    }
+        "magento-hackathon\/magento-composer-installer": "*"
+    },
+    "keywords": [
+        "openmage-module"
+    ]
 }
