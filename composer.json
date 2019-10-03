@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Infobeans_Switchowner",
+    "name": "openmage-module-fostering\/infobeans_switchowner",
     "type": "magento-module",
-    "license": "OSL",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Infobeans Switch Order Owner Release 1.0.2",
     "authors": [
